@@ -1,9 +1,9 @@
-// Color scheme: coffee and cream
+import { DailyQuote } from "@/components/home/dailyquote";
 
 export default function Page() {
   return (
-    <main className="flex min-h-screen flex-col container m-4">
-      Howdy ho
+    <main className="flex h-full w-full flex-col m-4">
+      <DailyQuote />
     </main>
   );
 }
