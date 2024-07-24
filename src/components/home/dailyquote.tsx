@@ -38,10 +38,11 @@ export const DailyQuote = () => {
   }, []);
 
   if (loading) return <div>Loading...</div>;
-    if (error) return <div>Error: {error}</div>;
-    if (removeQuote) return null;
+  if (error) return <div>Error: {error}</div>;
+  if (removeQuote) return null;
   return (
-    <div className="relative w-full flex py-8 pl-8 pr-12 border border-coffeeLight rounded-lg">
+    <div className="w-full flex flex-col gap-2">
+      <p className="text-xl text-coffeeDark font-bold">Quote of the day</p>
       <div className="h-fit w-full flex flex-col gap-2">
         {quote && (
           <>
@@ -50,12 +51,6 @@ export const DailyQuote = () => {
           </>
         )}
       </div>
-      <button
-        onClick={() => setRemoveQuote(true)}
-        className="text-lg cursor-pointer hover:opacity-70 absolute top-4 right-4"
-      >
-        &#x2715;
-      </button>
     </div>
   );
 };
