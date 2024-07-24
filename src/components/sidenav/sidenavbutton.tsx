@@ -5,6 +5,7 @@ import SettingsIcon from "@mui/icons-material/Settings";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { SvgIconProps } from "@mui/material/SvgIcon";
 import { FunctionComponent } from "react";
+import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
 
 interface SideNavButtonProps {
   route: {
@@ -24,6 +25,7 @@ interface SideNavIconProps {
 const iconMap = {
   home: HomeIcon,
   journal: EventNoteIcon,
+  habits: FitnessCenterIcon,
   settings: SettingsIcon,
   logout: LogoutIcon,
 };
