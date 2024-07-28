@@ -208,6 +208,31 @@ def get_next_gameweek():
             return {"error", "Could not get next gameweek data."}
 
 
+def get_gameweek_by_id(gameweek_id: int):
+    data_dir = "data"
+    file_path = os.path.join(data_dir, "gameweeks.json")
+    if os.path.exists(file_path):
+        with open(file_path, "r") as json_file:
+            gameweek_data = json.load(json_file)
+            gameweek = None
+            for item in gameweek_data:
+                if item.get("id") == gameweek_id:
+                    gameweek = item
+                    break
+            if gameweek is not None:
+                fixtures = get_fixtures_by_gameweek_id(gameweek_id)
+                gameweek["fixtures"] = fixtures
+                return gameweek
+            else:
+                return {"error": "Could not find gameweek with that id."}
+    else:
+        all_gameweeks = get_all_gameweeks()
+        if all_gameweeks:
+            get_gameweek_by_id(gameweek_id)
+        else:
+            return {"error", "Could not get gameweek data."}
+
+
 def get_all_gameweeks():
     data_dir = "data"
     file_path = os.path.join(data_dir, "gameweeks.json")
@@ -298,6 +323,28 @@ def get_fixtures():
         return fixtures_by_gameweek
 
 
+def get_fixtures_by_gameweek_id(gameweek_id: int):
+    data_dir = "data"
+    file_path = os.path.join(data_dir, "fixtures.json")
+    if os.path.exists(file_path):
+        with open(file_path, "r") as json_file:
+            fixture_data = json.load(json_file)
+        current_fixtures = fixture_data.get(f"{gameweek_id}")
+        # return current_fixtures
+        if current_fixtures:
+            formatted_data = _getFormattedFixtureData(current_fixtures)
+            return formatted_data
+        else:
+            return {"error": "Could not get current fixtures."}
+    else:
+        all_gameweeks = get_all_gameweeks()
+        if all_gameweeks:
+            get_fixtures_by_gameweek_id(gameweek_id)
+        else:
+            return {"error", "Could not get current gameweek data."}
+
+
+
 @app.route("/api/endpoint", methods=["GET", "POST"])
 def getFplData():
     @after_this_request
@@ -323,6 +370,20 @@ def getFplData():
     elif endpoint == "current_fixtures":
         current_fixtures = get_current_fixtures()
         return current_fixtures
+    elif endpoint == "get_gameweek_by_id":
+        gameweek_id = request.args.get("id")
+        if gameweek_id:
+            gameweek = get_gameweek_by_id(int(gameweek_id))
+            return gameweek
+        else:
+            return jsonify({"error": "No gameweek id provided."})
+    elif endpoint == "get_fixtures_by_gameweek_id":
+        gameweek_id = request.args.get("id")
+        if gameweek_id:
+            fixtures = get_fixtures_by_gameweek_id(int(gameweek_id))
+            return fixtures
+        else:
+            return jsonify({"error": "No gameweek id provided."})
     else:
         print("Endpoint not found", endpoint)
         return jsonify({"error": "Data is not ready yet."})

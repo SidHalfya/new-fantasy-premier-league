@@ -1,10 +1,9 @@
 "use client";
 import Link from "next/link";
-import { SideNavButton } from "./sidenavbutton";
+import { NavButton } from "./Navbutton";
 import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import SportsSoccerIcon from "@mui/icons-material/SportsSoccer";
-import BasicMenu from "../reusable/Menu";
 
 const ROUTES = [
   { title: "Home", href: "/", icon: "home" as const, id: uuidv4() },
@@ -34,13 +33,6 @@ const ROUTES = [
   },
 ];
 
-const MENU_ITEMS = [
-  {
-    label: "Settings",
-    href: "/settings",
-  },
-  { label: "Logout", href: "/logout" },
-];
 export default function NavBar() {
   const [selectedTab, setSelectedTab] = useState(ROUTES[0].id);
   return (
@@ -58,7 +50,7 @@ export default function NavBar() {
       </Link>
       <div className="flex gap-2 mx-4">
         {ROUTES.map((route) => (
-          <SideNavButton
+          <NavButton
             key={route.id}
             route={route}
             isSelected={selectedTab === route.id}
@@ -66,8 +58,17 @@ export default function NavBar() {
           />
         ))}
       </div>
-      <div>
-        <BasicMenu items={MENU_ITEMS} isNav={true} key={uuidv4()} />
+      <div className="ml-auto mr-12 flex items-center">
+        <NavButton
+          route={{
+            title: "Logout",
+            href: "/logout",
+            icon: "logout" as const,
+            id: "logout",
+          }}
+          isSelected={selectedTab === "logout"}
+          onClick={() => {}}
+        />
       </div>
     </div>
   );

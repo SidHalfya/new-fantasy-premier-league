@@ -2,11 +2,11 @@ import Link from "next/link";
 import HomeIcon from "@mui/icons-material/Home";
 import SettingsIcon from "@mui/icons-material/Settings";
 import LogoutIcon from "@mui/icons-material/Logout";
-import SportsIcon from '@mui/icons-material/Sports';
-import SportsGymnasticsIcon from '@mui/icons-material/SportsGymnastics';
-import LeaderboardIcon from '@mui/icons-material/Leaderboard';
-import GroupsIcon from '@mui/icons-material/Groups';
-interface SideNavButtonProps {
+import SportsIcon from "@mui/icons-material/Sports";
+import SportsGymnasticsIcon from "@mui/icons-material/SportsGymnastics";
+import LeaderboardIcon from "@mui/icons-material/Leaderboard";
+import GroupsIcon from "@mui/icons-material/Groups";
+interface NavButtonProps {
   route: {
     title: string;
     href: string;
@@ -17,7 +17,7 @@ interface SideNavButtonProps {
   onClick: () => void;
 }
 
-interface SideNavIconProps {
+interface NavIconProps {
   icon: keyof typeof iconMap;
 }
 
@@ -31,12 +31,12 @@ const iconMap = {
   logout: LogoutIcon,
 };
 
-const SideNavIcon: React.FC<SideNavIconProps> = ({ icon }) => {
+const NavIcon: React.FC<NavIconProps> = ({ icon }) => {
   const IconComponent = iconMap[icon];
   return <IconComponent />;
 };
 
-export const SideNavButton: React.FC<SideNavButtonProps> = ({
+export const NavButton: React.FC<NavButtonProps> = ({
   route,
   isSelected,
   onClick,
@@ -45,16 +45,11 @@ export const SideNavButton: React.FC<SideNavButtonProps> = ({
     <Link
       href={route.href}
       key={route.href}
-      className={`flex gap-4 items-center p-1 rounded-lg ${
-        isSelected ? "bg-coffeeLight" : "hover:bg-coffeeLight cursor-pointer"
-      }`}
+      className={`flex gap-4 items-center p-1 rounded-lg hover:underline`}
       onClick={onClick}
     >
-      <SideNavIcon icon={route.icon} />
-
-      <>
-        <p className="text-lg">{route.title}</p>
-      </>
+      {/* <NavIcon icon={route.icon} /> */}
+      <p className="text-lg">{route.title}</p>
     </Link>
   );
 };

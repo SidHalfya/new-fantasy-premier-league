@@ -34,14 +34,14 @@ export default function BasicMenu({
       >
         <MenuIcon />
       </button>
-      {open && (
+      {!open && (
         <div
-          className="absolute top-[28px] bg-white p-4 rounded"
+          className="absolute top-[28px] right-0 bg-white p-4 rounded flex flex-col gap-4"
           ref={outsideRef}
           id="basic-menu"
         >
           {items.map((item) => (
-            <div key={uuidv4()} className="flex flex-col gap-8">
+            <div key={uuidv4()}>
               {isNav ? (
                 <Link href={item.href || ""}>{item.label}</Link>
               ) : (

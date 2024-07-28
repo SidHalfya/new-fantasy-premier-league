@@ -32,7 +32,10 @@ export const fetchData = async (params: any, setData: any): Promise<any[]> => {
     const response = await fetch(url);
     const data = await response.json();
     if (data) {
-      console.log("data", data);
+      console.log("data", {
+        endpoint: params.endpoint,
+        data,
+      });
       setData(data);
     }
     return [];
